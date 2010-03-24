@@ -26,12 +26,3 @@ function pages_user_default_permissions() {
   $args = func_get_args();
   return call_user_func_array('_pages_user_default_permissions', $args);
 }
-
-/**
- * Implementation of hook_strongarm().
- */
-function pages_strongarm() {
-  module_load_include('inc', 'pages', 'pages.defaults');
-  $args = func_get_args();
-  return call_user_func_array('_pages_strongarm', $args);
-}

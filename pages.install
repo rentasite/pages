@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Implementation of hook_install().
+ */
+function pages_install() {
+
+   // do not display post information on page
+   $theme_config =  variable_get('theme_settings', array());
+   $theme_config['toggle_node_info_page'] = 0;
+   variable_set('theme_settings', $theme_config);
+
+   // disable comments for page
+   variable_set('comment_page', 0);
+
+   // metatags generation
+   variable_set('nodewords_metatags_generation_method_page', 1);
+   variable_set('nodewords_metatags_generation_source_page', 3);
+
+   // workflow settings
+   variable_set('node_options_page', _pages_vget_node_options_page());
+
+   return array();
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function pages_uninstall() {
+}
+
+/**
+ * Helper functions to set the value of node_options_page.
+ */
+function _pages_vget_node_options_page() {
+
+  return array('status', 'revision');
+}

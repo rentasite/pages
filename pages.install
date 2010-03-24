@@ -5,28 +5,61 @@
  */
 function pages_install() {
 
-   // do not display post information on page
-   $theme_config =  variable_get('theme_settings', array());
-   $theme_config['toggle_node_info_page'] = 0;
-   variable_set('theme_settings', $theme_config);
+  /**
+   * node type settings
+   */
+  // do not display post information on page
+  $theme_config =  variable_get('theme_settings', array());
+  $theme_config['toggle_node_info_page'] = 0;
+  variable_set('theme_settings', $theme_config);
 
-   // disable comments for page
-   variable_set('comment_page', 0);
+  // disable comments for page
+  variable_set('comment_page', 0);
 
-   // metatags generation
-   variable_set('nodewords_metatags_generation_method_page', 1);
-   variable_set('nodewords_metatags_generation_source_page', 3);
+  // metatags generation
+  variable_set('nodewords_metatags_generation_method_page', 1);
+  variable_set('nodewords_metatags_generation_source_page', 3);
 
-   // workflow settings
-   variable_set('node_options_page', _pages_vget_node_options_page());
+  // workflow settings
+  variable_set('node_options_page', _pages_vget_node_options_page());
 
-   return array();
+  /**
+   * better_formats
+   */
+  if (module_exists('better_formats')) {
+    // Get the ID for the role.
+    if (!($rid = _pages_get_role_id('pages'))) {
+      $sql = "INSERT INTO {role} (name) VALUES ('%s')";
+      db_query($sql, 'pages');
+
+      $rid = db_last_insert_id('role', 'rid');
+    }
+
+    // Create stubs in per role table.
+    $sql = "INSERT INTO {better_formats_defaults}
+            VALUES (%d, '%s', %d, %d, %d)";
+    db_query($sql, $rid, 'node', 0, 1, 25);
+    db_query($sql, $rid, 'comment', 0, 1, 25);
+    db_query($sql, $rid, 'block', 0, 1, 25);
+  }
+
+  return array();
 }
 
 /**
  * Implementation of hook_uninstall().
  */
 function pages_uninstall() {
+
+  if (module_exists('better_formats')) {
+    // Get the ID for the role.
+    $rid = _pages_get_role_id('pages');
+
+    // Delete role from format manager table.
+    $sql = "DELETE FROM {better_formats_defaults}
+            WHERE rid = %d";
+    db_query($sql, $rid);
+  }
 }
 
 /**
@@ -35,4 +68,18 @@ function pages_uninstall() {
 function _pages_vget_node_options_page() {
 
   return array('status', 'revision');
+}
+
+/**
+ * Helper function to retrieve role id by name
+ */
+function _pages_get_role_id($rolename) {
+
+  $sql = "SELECT rid
+          FROM {role}
+          WHERE name='%s'";
+
+  if ($row = db_fetch_object(db_query_range($sql, $rolename, 0, 1))) {
+    return $row->rid;
+  }
 }

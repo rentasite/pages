@@ -18,6 +18,14 @@ function _pages_ctools_plugin_api() {
 function _pages_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: access administration pages
+  $permissions[] = array(
+    'name' => 'access administration pages',
+    'roles' => array(
+      '0' => 'pages',
+    ),
+  );
+
   // Exported permission: administer menu
   $permissions[] = array(
     'name' => 'administer menu',

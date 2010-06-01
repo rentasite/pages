@@ -16,10 +16,6 @@ function pages_install() {
   // disable comments for page
   variable_set('comment_page', 0);
 
-  // metatags generation
-  variable_set('nodewords_metatags_generation_method_page', 1);
-  variable_set('nodewords_metatags_generation_source_page', 3);
-
   // workflow settings
   variable_set('node_options_page', _pages_vget_node_options_page());
 }

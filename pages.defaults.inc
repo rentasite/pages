@@ -18,9 +18,9 @@ function _pages_ctools_plugin_api() {
 function _pages_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: access ckeditor
+  // Exported permission: access administration pages
   $permissions[] = array(
-    'name' => 'access ckeditor',
+    'name' => 'access administration pages',
     'roles' => array(
       '0' => 'pages',
     ),
@@ -69,14 +69,6 @@ function _pages_user_default_permissions() {
   // Exported permission: edit any page content
   $permissions[] = array(
     'name' => 'edit any page content',
-    'roles' => array(
-      '0' => 'pages',
-    ),
-  );
-
-  // Exported permission: edit meta tag DESCRIPTION
-  $permissions[] = array(
-    'name' => 'edit meta tag DESCRIPTION',
     'roles' => array(
       '0' => 'pages',
     ),

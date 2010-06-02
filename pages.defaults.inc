@@ -34,6 +34,14 @@ function _pages_user_default_permissions() {
     ),
   );
 
+  // Exported permission: administer nodes
+  $permissions[] = array(
+    'name' => 'administer nodes',
+    'roles' => array(
+      '0' => 'pages',
+    ),
+  );
+
   // Exported permission: create page content
   $permissions[] = array(
     'name' => 'create page content',
@@ -66,6 +74,14 @@ function _pages_user_default_permissions() {
     ),
   );
 
+  // Exported permission: delete revisions
+  $permissions[] = array(
+    'name' => 'delete revisions',
+    'roles' => array(
+      '0' => 'pages',
+    ),
+  );
+
   // Exported permission: edit any page content
   $permissions[] = array(
     'name' => 'edit any page content',
@@ -82,9 +98,25 @@ function _pages_user_default_permissions() {
     ),
   );
 
+  // Exported permission: revert revisions
+  $permissions[] = array(
+    'name' => 'revert revisions',
+    'roles' => array(
+      '0' => 'pages',
+    ),
+  );
+
   // Exported permission: use admin toolbar
   $permissions[] = array(
     'name' => 'use admin toolbar',
+    'roles' => array(
+      '0' => 'pages',
+    ),
+  );
+
+  // Exported permission: view revisions
+  $permissions[] = array(
+    'name' => 'view revisions',
     'roles' => array(
       '0' => 'pages',
     ),
